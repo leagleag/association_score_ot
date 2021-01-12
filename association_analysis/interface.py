@@ -5,18 +5,7 @@ import sys
 
 from association_analysis.query_api import query_data_into_df_with_columns
 from association_analysis.utils import statistics_with_columns
-
-# api_url_base = "https://platform-api.opentargets.io/v3/platform"
-# # endpoint to use for association analysis
-# endpoint = "/public/association/filter"
-# # maximum number of elements to query in one batch
-# max_batch_size = 100
-# # data columns to keep from the json data
-# json_data_columns = ["target.id", "disease.id", "association_score.overall"]
-# # column to run statistics on
-# stats_on = "association_score.overall"
-# # statistics to print out; columns are from pd.Series.describe()
-# stats_columns = ["min", "max", "mean", "std"]
+from association_analysis.utils import load_yaml_parameter_file
 
 def parse_args(args):
     """define the set of possible cl commands"""
@@ -29,17 +18,22 @@ def parse_args(args):
 
     return parser.parse_args(args)
 
-def run_analysis(target_id, disease_id, stats_on_column):
+def run_analysis(target_id, disease_id, **kwargs):
     """translate each possible command into function calls"""
     if target_id is not None:
         # -t ID
-        payload = {"target": [target_id], "size": max_batch_size}
-        score_df = query_data_into_df_with_columns(api_url_base, endpoint, payload, json_data_columns)
+        payload = {"target": [target_id], "size": kwargs["max_batch_size"]}
+        score_df = query_data_into_df_with_columns(
+            kwargs["api_url_base"], kwargs["endpoint"], payload,
+            kwargs["json_data_columns"])
     elif disease_id is not None:
         # -d ID
-        payload = {"disease": [disease_id], "size": max_batch_size}
-        score_df = query_data_into_df_with_columns(api_url_base, endpoint, payload, json_data_columns)
-    stats_series = statistics_with_columns(score_df[stats_on_column], stats_columns)
+        payload = {"disease": [disease_id], "size": kwargs["max_batch_size"]}
+        score_df = query_data_into_df_with_columns(
+            kwargs["api_url_base"], kwargs["endpoint"], payload,
+            kwargs["json_data_columns"])
+    stats_series = statistics_with_columns(
+        score_df[kwargs["column_for_stats"]], kwargs["stats_columns"])
     return {"score_df": score_df, "stats_series": stats_series}
 
 def print_analysis(**kwargs):
@@ -50,6 +44,8 @@ def print_analysis(**kwargs):
     print(kwargs["stats_series"].to_string(header=False))
 
 if __name__ == "__main__":
+    config = load_yaml_parameter_file()
     args = parse_args(sys.argv[1:])
-    results = run_analysis(**args, stats_on_column=stats_on_column)
+    config.update(vars(args))
+    results = run_analysis(**config)
     print_analysis(**results)

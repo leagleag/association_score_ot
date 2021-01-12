@@ -48,9 +48,17 @@ def test_cli_incorrect_dual_option(capsys):
 def test_run_analysis(target_id, disease_id):
     expected_df = pd.DataFrame(["tid", "", "scores"], columns=["scores_column"])
     expected_series = pd.Series(["stats"])
+    dummy_kwargs = {
+        "api_url_base":"not_used",
+        "endpoint": "not_used",
+        "max_batch_size":0,
+        "json_data_columns":["not", "used"],
+        "column_for_stats":"scores_column", # important for this test
+        "stats_columns":[0,0],
+    }
     with patch("association_analysis.interface.query_data_into_df_with_columns", return_value=expected_df), \
         patch("association_analysis.interface.statistics_with_columns", return_value=expected_series):
-        out_dict = cli.run_analysis(target_id, disease_id, "scores_column")
+        out_dict = cli.run_analysis(target_id, disease_id, **dummy_kwargs)
     pd.testing.assert_frame_equal(out_dict["score_df"], expected_df)
     pd.testing.assert_series_equal(out_dict["stats_series"], expected_series)
 
