@@ -5,10 +5,22 @@ import sys
 
 from association_analysis.query_api import query_data_into_df_with_columns
 from association_analysis.utils import statistics_with_columns
+
+# api_url_base = "https://platform-api.opentargets.io/v3/platform"
+# # endpoint to use for association analysis
+# endpoint = "/public/association/filter"
+# # maximum number of elements to query in one batch
+# max_batch_size = 100
+# # data columns to keep from the json data
+# json_data_columns = ["target.id", "disease.id", "association_score.overall"]
+# # column to run statistics on
+# stats_on = "association_score.overall"
+# # statistics to print out; columns are from pd.Series.describe()
+# stats_columns = ["min", "max", "mean", "std"]
+
 def parse_args(args):
     """define the set of possible cl commands"""
     parser = argparse.ArgumentParser(
-        # prog="getscore",
         description="analysis of opentargets association scores for targets and diseases",
     )
     command_group = parser.add_mutually_exclusive_group(required=True)
