@@ -29,6 +29,14 @@ def run_analysis(target_id, disease_id, stats_on_column):
         score_df = query_data_into_df_with_columns(api_url_base, endpoint, payload, json_data_columns)
     stats_series = statistics_with_columns(score_df[stats_on_column], stats_columns)
     return {"score_df": score_df, "stats_series": stats_series}
+
+def print_analysis(**kwargs):
+    """print results from run_analysis"""
+    print("Found {0} scores:".format(kwargs["score_df"].shape[0]))
+    print(kwargs["score_df"].to_string())
+    print("Scores statistics:")
+    print(kwargs["stats_series"].to_string(header=False))
+
 if __name__ == "__main__":
     args = parse_args(sys.argv[1:])
     results = run_analysis(**args, stats_on_column=stats_on_column)

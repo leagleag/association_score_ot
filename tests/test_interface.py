@@ -53,3 +53,24 @@ def test_run_analysis(target_id, disease_id):
         out_dict = cli.run_analysis(target_id, disease_id, "scores_column")
     pd.testing.assert_frame_equal(out_dict["score_df"], expected_df)
     pd.testing.assert_series_equal(out_dict["stats_series"], expected_series)
+
+def test_print_analysis(capsys):
+    expected_stdout = """Found 4 scores:
+   c1  c2  c3
+0   1   2   3
+1   1   2   3
+2   1   2   3
+3   1   2   3
+Scores statistics:
+c1  1
+c2  2
+c3  3
+c4  4
+"""
+    input_kwargs = {
+        "score_df": pd.DataFrame(data=[[1, 2, 3]]*4, columns=["c1", "c2", "c3"]),
+        "stats_series": pd.DataFrame(data=[1, 2, 3, 4], index=["c1", "c2", "c3", "c4"])
+    }
+    cli.print_analysis(**input_kwargs)
+    captured = capsys.readouterr()
+    assert captured.out == expected_stdout
