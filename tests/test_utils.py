@@ -1,5 +1,6 @@
 import pandas as pd
 import statistics as st
+import yaml
 
 from association_analysis import utils
 
@@ -19,3 +20,19 @@ def test_statistics_with_columns():
         data=[1, 4, st.mean(input_series.values), st.stdev(input_series.values)])
     out_series = utils.statistics_with_columns(input_series, columns_list)
     pd.testing.assert_series_equal(expected_series, out_series)
+
+def test_load_yaml_parameter_file(tmpdir):
+    yml_content = """\
+    one: 1
+    alist: [2, 3, 4]
+    surface:
+        deep:
+            deeper:
+                "Found!"
+    """
+    yml_file = tmpdir.join("config.yml")
+    yml_file.write(yml_content)
+    assert yml_file.read() == yml_content
+    expected_obj = {"one": 1, "alist": [2,3,4], "surface":{"deep": {"deeper":"Found!"}}}
+    python_dict = utils.load_yaml_parameter_file(yml_file)
+    assert expected_obj == python_dict

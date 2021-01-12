@@ -1,0 +1,13 @@
+# API QUERY PARAMETERS
+api_url_base: "https://platform-api.opentargets.io/v3/platform"
+# endpoint for association analysis
+endpoint: "/public/association/filter"
+# maximum elements to retrieve in one POST batch
+max_batch_size: 100
+# ANALYSIS PARAMETERS
+# data columns to keep from the json POST data
+json_data_columns: ["target.id", "disease.id", "association_score.overall"]
+# column to use for stats
+column_for_stats: "association_score.overall"
+# statistics to print out; columns are from pd.Series.describe()
+stats_columns: ["min", "max", "mean", "std"]
