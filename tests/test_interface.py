@@ -1,7 +1,10 @@
-from association_analysis import interface as cli
-
 import os
 import pytest
+import pandas as pd
+
+from unittest.mock import patch
+
+from association_analysis import interface as cli
 
 def test_cli_entrypoint():
     assert os.system("python association_analysis/interface.py -h") == 0
@@ -34,3 +37,19 @@ def test_cli_incorrect_dual_option(capsys):
     captured = capsys.readouterr()
     assert "error: argument -d/--disease_id: expected one argument" in captured.err
     assert e.value.code == 2
+
+@pytest.mark.parametrize(
+    "target_id, disease_id",
+    [
+        ("exists",None),
+        (None,"exists")
+    ]
+)
+def test_run_analysis(target_id, disease_id):
+    expected_df = pd.DataFrame(["tid", "", "scores"], columns=["scores_column"])
+    expected_series = pd.Series(["stats"])
+    with patch("association_analysis.interface.query_data_into_df_with_columns", return_value=expected_df), \
+        patch("association_analysis.interface.statistics_with_columns", return_value=expected_series):
+        out_dict = cli.run_analysis(target_id, disease_id, "scores_column")
+    pd.testing.assert_frame_equal(out_dict["score_df"], expected_df)
+    pd.testing.assert_series_equal(out_dict["stats_series"], expected_series)
