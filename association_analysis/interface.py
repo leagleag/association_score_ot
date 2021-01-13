@@ -39,7 +39,7 @@ def run_analysis(target_id, disease_id, **kwargs):
 def print_analysis(**kwargs):
     """print results from run_analysis"""
     print("Found {0} scores:".format(kwargs["score_df"].shape[0]))
-    print(kwargs["score_df"].to_string())
+    print(kwargs["score_df"].to_string(index=False))
     print("Scores statistics:")
     print(kwargs["stats_series"].to_string(header=False))
 
