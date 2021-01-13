@@ -33,6 +33,7 @@ The ``association_analysis`` package contains 3 modules:
 ``requirements.txt`` lists packages with *fixed* versions to build the environment with.
 
 Finally, we find in ``tests/``... tests for each module.
+Finally, we find in ``tests/`` tests for each module.
 
 Installation
 ============
@@ -174,41 +175,11 @@ The environment was fabricated using ``virtualenv`` and ``pip3``.
 To load the environment using ``requirements.txt``:
 
 .. code-block:: shell
-  :linenos:
 
   virtualenv ot_env
   source ot_env/bin/activate (gitbash: source ot_env/Scripts/activate)
   pip3 install -r requirements.txt
 
-
-
-
-## Running examples
-
-### Querying association scores for a disease id
-`python association_analysis/interface.py -d Orphanet_399`
-Trimmed output:
-```
-Found 1330 scores:
-          target.id       disease.id  association_score.overall
-0   ENSG00000197386      EFO_0009386                   1.000000
-1   ENSG00000197386      EFO_0005774                   1.000000
-2   ENSG00000197386      EFO_0000618                   1.000000
-3   ENSG00000197386    MONDO_0002025                   1.000000
-4   ENSG00000197386      EFO_0000677                   1.000000
-5   ENSG00000197386      EFO_1001457                   1.000000
-.... trimmed ....
-53  ENSG00000090266  Orphanet_399                   0.004000
-54  ENSG00000086232  Orphanet_399                   0.004000
-55  ENSG00000077782  Orphanet_399                   0.004000
-56  ENSG00000023228  Orphanet_399                   0.004000
-57  ENSG00000006062  Orphanet_399                   0.004000
-Scores statistics:
-min     0.004000
-max     1.000000
-mean    0.088074
-std     0.163132
-```
 
 
 ## TODO
