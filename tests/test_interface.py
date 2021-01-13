@@ -64,11 +64,11 @@ def test_run_analysis(target_id, disease_id):
 
 def test_print_analysis(capsys):
     expected_stdout = """Found 4 scores:
-   c1  c2  c3
-0   1   2   3
-1   1   2   3
-2   1   2   3
-3   1   2   3
+ c1  c2  c3
+  1   2   3
+  1   2   3
+  1   2   3
+  1   2   3
 Scores statistics:
 c1  1
 c2  2
