@@ -212,9 +212,3 @@ To load the environment using ``requirements.txt``:
 On requests error handling
 --------------------------
 We assumed the network is nice but there are ways to handle exceptions when using requests. More details `here <https://requests.readthedocs.io/en/latest/user/quickstart/#errors-and-exceptions>`_.
-
-todo
-^^^^
-4. add formatters
-- use black https://github.com/psf/black; atom: python-black
-- we can add a pre-hook with black to get the tag https://ljvmiranda921.github.io/notebook/2018/06/21/precommits-using-black-and-flake8/
