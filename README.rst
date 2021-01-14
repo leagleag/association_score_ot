@@ -32,16 +32,42 @@ The ``association_analysis`` package contains 3 modules:
 ``config.yml`` groups static parameters in a single place separated from the code.
 ``requirements.txt`` lists packages with *fixed* versions to build the environment with.
 
-Finally, we find in ``tests/``... tests for each module.
 Finally, we find in ``tests/`` tests for each module.
 
 Installation
 ============
+Using docker
+-----------------
+For this step, this docker version is used, it can matter:
+
+.. code-block:: shell
+
+  $ docker --version
+  Docker version 19.03.13, build 4484c46d9d
+
+First, clone this repository.
+
+.. code-block:: shell
+
+  git clone git@github.com:leagleag/association_score_ot.git
+
+In the repository, the image ``analysis_ubuntu`` is built. You can expect the
+image to weight ~800 MB and the building process to take ~160 s.
+
+.. code-block:: shell
+
+  docker build -t analysis_ubuntu -f Dockerfile .
+
+That is it. Our favorite program can be run such as:
+
+.. code-block:: shell
+
+  docker run analysis_ubuntu -d Orphanet_399
+  docker run analysis_ubuntu -t ENSG00000197386
 
 Using virtualenv and pip3
 -------------------------
 .. code-block:: shell
-  :linenos:
 
   git clone git@github.com:leagleag/association_score_ot.git
   cd association_score_ot
