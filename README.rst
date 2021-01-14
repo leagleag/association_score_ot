@@ -30,6 +30,7 @@ The ``association_analysis`` package contains 3 modules:
 3. functions of more independent logic are found in ``utils.py``.
 
 ``config.yml`` groups static parameters in a single place separated from the code.
+
 ``requirements.txt`` lists packages with *fixed* versions to build the environment with.
 
 Finally, we find in ``tests/`` tests for each module.
@@ -184,6 +185,8 @@ Output:
 
 Notes
 ======
+On environments
+---------------
 The environment was fabricated using ``virtualenv`` and ``pip3``.
 
 .. code-block:: shell
@@ -206,17 +209,11 @@ To load the environment using ``requirements.txt``:
   source ot_env/bin/activate (gitbash: source ot_env/Scripts/activate)
   pip3 install -r requirements.txt
 
+On requests error handling
+--------------------------
+We assumed the network is nice but there are ways to handle exceptions when using requests. More details `here <https://requests.readthedocs.io/en/latest/user/quickstart/#errors-and-exceptions>`_.
 
-
-## TODO
-- docker installation
-- make sure to have code on main branch
-- use black
 
 4. add formatters
 - use black https://github.com/psf/black; atom: python-black
 - we can add a pre-hook with black to get the tag https://ljvmiranda921.github.io/notebook/2018/06/21/precommits-using-black-and-flake8/
-5. add types!
-
-### more request error handling
-https://requests.readthedocs.io/en/latest/user/quickstart/#errors-and-exceptions
