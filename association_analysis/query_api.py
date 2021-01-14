@@ -6,6 +6,7 @@ import pandas as pd
 
 from association_analysis.utils import json_to_df_with_columns
 
+
 def post_single_payload(api_url_base, endpoint, payload):
     """POST a payload at :param api_url_base using the :param endpoint.
 
@@ -26,6 +27,7 @@ def post_single_payload(api_url_base, endpoint, payload):
         print("An unhandled error {0} happened".format(response.status_code))
         return None
 
+
 def post_payload_generator(api_url_base, endpoint, payload):
     """Create generator to process batches of POST requests sequentially.
 
@@ -43,6 +45,7 @@ def post_payload_generator(api_url_base, endpoint, payload):
             payload["next"] = data_dict["next"]
         first = False
         yield data_dict
+
 
 def query_data_into_df_with_columns(api_url_base, endpoint, payload, columns_list):
     """Exhaust json generator and put selected data into one dataframe.
